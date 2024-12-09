@@ -7,7 +7,9 @@
 @Version: version_1
 @Last_editor
 """
-
+from models.attendence_information_table import AttendanceRecord
+from models.course_selection_table import CourseSelectionRecord
+from models.student_information_table import Student
 from utils.database_manager import DatabaseManager
 from sqlalchemy import Column, String, Integer, DateTime, text, func
 from sqlalchemy.ext.declarative import declarative_base
@@ -84,6 +86,8 @@ class PostAttendanceManager:
 
         existing_post_attendance_record = session.query(PostAttendanceRecord).filter_by(
             code=post_attendance_record.code,
+            attendance_start_time = post_attendance_record.attendance_start_time,
+            attendance_end_time = post_attendance_record.attendance_end_time,
         ).first()
 
         if existing_post_attendance_record:
@@ -91,8 +95,30 @@ class PostAttendanceManager:
             return False
 
         else:
+            #添加考勤记录
             session.add(post_attendance_record)
             session.commit()
+
+            #获取选了这门课的所有学生
+            course_selection_records = session.query(CourseSelectionRecord).filter_by(
+                course_id=post_attendance_record.course_id
+            ).all()
+
+            # 为每个学生创建考勤记录
+            for course_selection in course_selection_records:
+                attendance_record = AttendanceRecord(
+                    stu_id=course_selection.student_id,
+                    course_id=post_attendance_record.course_id,
+                    course_no=post_attendance_record.course_no,
+                    teacher_id=course_selection.teacher_id,
+                    date=datetime.now(),  # 假设上课日期是当前日期
+                    status=0,  # 设置考勤状态为0
+                )
+                session.add(attendance_record)
+
+                # 提交学生考勤记录
+            session.commit()
+
             print(f"This post attendance record with attendance_id"
                   f"{post_attendance_record.attendance_id} && {post_attendance_record.course_id} &&{post_attendance_record.course_name}"
                   f"{post_attendance_record.course_no} && {post_attendance_record.attendance_start_time}"
