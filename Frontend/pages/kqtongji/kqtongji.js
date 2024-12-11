@@ -7,8 +7,8 @@ Page({
     courseNames: ['操作系统原理', '编译原理', '软件工程', 'ELC4'],
     courseIds:['c1','c2','c3','c4'],
     WeekIds: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10","11","12","13","14","15","16","17","18"],
-    selectedWeek: '请选择课程',
-    selectedCourse: '请选择周次',
+    selectedWeek: '请选择周次',
+    selectedCourse: '请选择课程',
     qingjiaList: [], // 缺勤学生列表
     absenceList: [], // 请假学生列表
     course_id:'',
@@ -43,7 +43,7 @@ Page({
 
   fetchAbsenceList: function () {
     const { selectedWeek, selectedCourse } = this.data;
-    if (selectedWeek === '请选择课程' || selectedCourse === '请选择周次') {
+    if (selectedWeek === '请选择周次' || selectedCourse === '请选择课程') {
       wx.showToast({
         title: '请选择课程和周次',
         icon: 'none'

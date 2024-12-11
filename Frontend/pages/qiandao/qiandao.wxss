@@ -4,19 +4,27 @@ border-radius: 20px;
 border-color: black;
 padding: 10rpx;
 width: 85%;
-position: fixed;
+position: relative;
 top:5%;left:6%;
+margin-top: 20px;
 }
 .context text{
+
 display: block;
 width: 100%;
 text-align: center;
 color:black;
 font-weight:400 ;
 }
-.context input{
-       height: 20%;
-       border: #4183ff;
+.inputqiandao {
+  margin-top: 30px;
+  border-color: #cccccc; /* 淡灰色 */
+  border-style: solid; /* 实线 */
+  border-radius: 10px;
+  border-width: 2px; /* 边框厚度 */
+  padding: 3%;
+  font-size: 20px;
+  text-align: center;
 }
 .qiandao{
  margin-top: 20%;
@@ -25,4 +33,21 @@ font-weight:400 ;
   font-size: 35rpx;
   margin-right: 10rpx;
 }
-     
+.content {
+  padding: 40rpx;
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+}
+.content text {
+  font-size: 30rpx; /* 适当放大文本 */
+  color: #333; /* 深色文本 */
+  margin-right: 20rpx;
+}
+.content picker {
+  flex-grow: 1; /* 让选择器扩展填充可用空间 */
+  border: 2rpx solid #3498db; /* 蓝色边框 */
+  border-radius: 10rpx; /* 圆角边框 */
+  padding: 20rpx;
+  margin-right: 20rpx;
+  background-color: #fff;
+}

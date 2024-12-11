@@ -214,10 +214,12 @@ def punch_in():
         student_id = request.form.get('student_id')
         punch_in_time = request.form.get('punch_in_time')
         code = request.form.get('code')
+        course_id = request.form.get('course_id')
+
 
         # 根据签到码来查找相关的post_attendance记录
         post_attendance_list = post_attendance_manager.execute_sql_query(f"select * from post_attendance_information"
-                                                                         f" where code='{code}'")
+                                                                         f" where code='{code}' and course_id='{course_id}' ")
 
         # 判断该考勤任务是否存在
         if len(post_attendance_list) == 0:
@@ -226,9 +228,6 @@ def punch_in():
         # 获取 post_attendance_information 内的考勤时间 %Y-%m-%d %H:%M:%S
         start_time = post_attendance_list[0][4]
         end_time = post_attendance_list[0][5]
-        # 获取 post_attendance_information 内的其他信息
-        course_id = post_attendance_list[0][1]
-        course_no = post_attendance_list[0][3]
 
         # 获取存入 attendance_information 表的时间  %H:%M:%S
         start_time_str = datetime.strftime(start_time, "%Y-%m-%d %H:%M:%S")
@@ -237,39 +236,42 @@ def punch_in():
         end_time_str = datetime.strftime(end_time, "%Y-%m-%d %H:%M:%S")
         _, signout_time = end_time_str.split(' ')
 
-        # 获取data日期
+        # 获取data日期,当前时间
         data, _ = punch_in_time.split(' ')
-
-        # 获取老师id
-        teacher_id = course_manager.execute_sql_query(f"select teacher_id from course where course_id='{course_id}'")
-        status = '1'  # 记录考勤状态
-
-        # 封装数据
-        attendance_record = AttendanceRecord(
-            student_id,
-            course_id,
-            course_no,
-            teacher_id[0][0],
-            data,
-            status,
-            signin_time,
-            signout_time
-        )
+        current_time = datetime.now().strftime("%H:%M:%S")
 
         # 判断打卡签到时间是否在考勤时间区域内
         if time.strptime(start_time_str, "%Y-%m-%d %H:%M:%S") > time.strptime(punch_in_time, "%Y-%m-%d %H:%M:%S") \
                 or time.strptime(end_time_str, "%Y-%m-%d %H:%M:%S") < time.strptime(punch_in_time, "%Y-%m-%d %H:%M:%S"):
-            # 添加缺勤记录
-            attendance_record.status = '0'
-            attendance_record.signin_time = None
-            attendance_record.signout_time = None
-            attendance_information_manager.add_attendance_record(attendance_record)
-
             return jsonify({'msg': 'This attendance assignment has been terminated'}), 201
 
-        # 添加考勤成功记录
-        attendance_information_manager.add_attendance_record(attendance_record)
-        return jsonify({'msg': 'The time check is successful'}), 200
+        # 查找对应的考勤记录
+        attendance_record = attendance_information_manager.execute_sql_query(
+            f"select * from attendance_information where stu_id='{student_id}' and course_id='{course_id}'"
+        )
+
+        # 判断是否有对应的考勤记录
+        if len(attendance_record) == 0:
+            # 如果没有记录，创建新的考勤记录
+            teacher_id = course_manager.execute_sql_query(
+                f"select teacher_id from course where course_id='{course_id}'")
+            attendance_record = AttendanceRecord(
+                student_id,
+                course_id,
+                post_attendance_list[0][3],  # course_no
+                teacher_id[0][0],
+                punch_in_time,
+                1,  # 记录考勤状态为1
+                current_time,  # signin_time
+            )
+            attendance_information_manager.add_attendance_record(attendance_record)
+            return jsonify({'msg': 'The attendance record has been created successfully'}), 201
+        else:
+            # 如果有记录，更新考勤状态为1
+            attendance_information_manager.execute_sql_query(
+                f"update attendance_information set status=1,signin_time = '{current_time}' where stu_id='{student_id}' and course_id='{course_id}'"
+            )
+            return jsonify({'msg': 'The attendance status has been updated successfully'}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -349,13 +351,13 @@ def search_student_course():
         student_id = request.args.get('student_id')
 
         # 查询数据库
-        sql_command = f"select distinct course_name from course_selection where student_id = '{student_id}'"
+        sql_command = f"select distinct course_id,course_name from course_selection where student_id = '{student_id}'"
         all_courses = course_selection_manager.execute_sql_query(sql_query=sql_command)
 
         # 展开课程名称
         courses_list = [
             {
-                'course_name': course.course_name
+                course.course_id: course.course_name
             }
             for course in all_courses
         ]
