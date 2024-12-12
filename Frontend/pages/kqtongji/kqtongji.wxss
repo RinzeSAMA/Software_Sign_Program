@@ -78,14 +78,35 @@
      }
      
      .table-row {
-       border-top: 2rpx solid #eee; /* 行与行之间的分隔线 */
-     }
-     
-     .table-cell {
-       text-align: center;
-       padding: 20rpx; /* 增加单元格内边距 */
-     }
-     
+      display: flex;
+      justify-content: space-between; /* 元素之间的间距平均分布 */
+      border-top: 2rpx solid #eee; /* 行与行之间的分隔线 */
+      padding: 10rpx 0; /* 行内上下padding */
+      align-items: center;
+    }
+    
+    .flex-container {
+      width: 100%; /* 确保容器占满整行 */
+      display: flex;
+      justify-content: space-between; /* 元素之间的间距平均分布 */
+      align-items: center;
+    }
+    
+    .table-cell {
+      flex: 1; /* 允许元素占据可用空间 */
+      text-align: left; /* 文本左对齐 */
+      padding: 20rpx; /* 增加单元格内边距 */
+    }
+    
+    .status-text {
+      flex: 1; /* 允许元素占据可用空间 */
+      text-align: right; /* 文本右对齐 */
+      padding: 0 20rpx; /* 增加单元格内边距 */
+      
+    }
+    .table-cell, .status-text {
+      line-height: 50rpx; /* 设置行高，确保文本垂直居中 */
+    } 
      /* 单选框样式 */
      .danxuan {
        padding: 20rpx;

@@ -86,15 +86,20 @@ def view_absentee_list():
         # 存储缺勤学生的信息
         absent_students = []
 
+
         # 检查每个学生在指定周次的出勤情况
         for student_id_tuple in student_ids:
             student_id = student_id_tuple[0]
-            sql_query_absence = f"SELECT stu_id FROM attendance_information WHERE stu_id = '{student_id}' AND course_id = '{course_id}' AND course_no = {course_no} AND status = 0"
-            absence_count = attendance_manager.execute_sql_query(sql_query_absence)
+            sql_query_absence = f"SELECT * FROM attendance_information WHERE stu_id = '{student_id}' AND course_id = '{course_id}' AND course_no = {course_no} AND status IN (0, 2, 3)"
+            absence_info = attendance_manager.execute_sql_query(sql_query_absence)
 
             # 如果学生在该周次有缺勤记录，则添加到列表中
-            if len(absence_count) != 0:
-                absent_students.append(student_id_tuple[1])#加入名字
+            if len(absence_info) != 0:
+                for info in absence_info:
+                    absent_students.append({
+                        'name':student_id_tuple[1],#加入名字
+                        'status':info[5]#加入status
+                    })
 
         # 返回缺勤学生名单
         return jsonify({'absent_students': absent_students}), 200

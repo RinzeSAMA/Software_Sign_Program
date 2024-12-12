@@ -9,8 +9,8 @@ Page({
     WeekIds: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10","11","12","13","14","15","16","17","18"],
     selectedWeek: '请选择周次',
     selectedCourse: '请选择课程',
-    qingjiaList: [], // 缺勤学生列表
-    absenceList: [], // 请假学生列表
+    qingjiaList: [], // 请假学生列表
+    absenceList: [], // 缺勤学生列表
     course_id:'',
   },
 
@@ -65,11 +65,33 @@ Page({
       success:function(res){
         if(res.statusCode==200){
           //请求成功，更新缺勤名单数据
-          that.setData({
-            absenceList:res.data.absent_students
-          })
-        }
-      },
+          // 请求成功，更新缺勤名单数据
+        let qingjiaList = []; // 请假列表
+        let absenceList = []; // 缺勤列表
+
+        // 遍历缺勤学生名单，根据status分类
+        res.data.absent_students.forEach(student => {
+          if (student.status === 0) {
+            // 如果status为0，存入absenceList
+            absenceList.push(student);
+          } else if (student.status === 2 || student.status === 3) {
+            // 如果status为2或3，存入qingjiaList
+            qingjiaList.push(student);
+          }
+        });
+        // 更新页面数据
+        that.setData({
+          qingjiaList: qingjiaList,
+          absenceList: absenceList
+        });
+        } else {
+        // 处理非200的响应状态码
+        that.setData({
+          error: '服务器响应错误：' + res.errMsg,
+          loading: false
+        });
+      }
+    },
       fail: function(error) {
         // 请求失败，设置错误信息
         that.setData({
@@ -78,25 +100,5 @@ Page({
         });
       }
     });
-    //查询缺勤名单
-
-    // wx.request({
-    //   url: 'http://localhost:5000/teacher_manager/view_absentee_list', // 接口地址
-    //   method: 'GET',
-    //   data: params, // 请求参数
-    //   header: {
-    //     'app': 'wx-app' // 设置请求的header
-    //   },
-    //   success:function(res){
-    //     if(res.statusCode==200){
-    //       //请求成功，更新缺勤名单数据
-    //       this.setData({
-    //         absenceList:res.data.absent_students
-    //       })
-    //     }
-    //   }
-    // })
-    // //查询缺勤名单  
-
   }
 });

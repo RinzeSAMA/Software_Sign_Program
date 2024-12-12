@@ -39,14 +39,23 @@
   <!-- 缺勤学生列表 -->
   <block wx:if="{{radioValue=='1'}}">
     <view class="table-row" wx:for="{{absenceList}}" wx:key="unique">
-      <text class="table-cell">{{item}}</text>
+      <text class="table-cell">{{item.name}}</text>
     </view>
   </block>
   
   <!-- 请假学生列表 -->
   <block wx:if="{{radioValue=='2'}}">
-    <view class="table-row" wx:for="{{qingjiaList}}" wx:key="unique">
-      <text class="table-cell">{{item}}</text>
+  <view class="table-row" wx:for="{{qingjiaList}}" wx:key="unique">
+    <view class="flex-container">
+      <text class="table-cell">{{item.name}}
+      </text>
+      <block wx:if="{{item.status == 2}}">
+        未审批
+      </block>
+      <block wx:elif="{{item.status == 3}}">
+        已审批
+      </block>
     </view>
-  </block>
+  </view>
+</block>
 </view>
