@@ -254,6 +254,7 @@ def search_teacher_course():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+#请假审批
 @teacher_routes.route('/teacher_manager/review_leave_request', methods=['POST'])
 def review_leave_request():
     # 创建查询管理器实例

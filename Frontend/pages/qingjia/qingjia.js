@@ -10,22 +10,28 @@ Page({
               weekIndex: 0,
               stuId: '',
               courseData: [], // 原始从服务器获取的课程数据
+              courseIds:[],
               courseNames: [], // 存储课程名称的数组
               selectedCourse: '', // 当前选中的课程名称
+              selectedCourseId:'',//选中的课程id
               // 初始化页面数据
-              contactInfo: '',
-              expOverview: '',
+              contactInfo: '',//
+              expOverview: '',//请假理由
        },
        weekchoose(e) {
               this.setData({
                      weekIndex: e.detail.value
               });
+              console.log(this.data.weekIndex)
        },
        classchoose(e) {
               // 更新选中的课程名称
               this.setData({
-                     selectedCourse: this.data.courseNames[e.detail.value]
+                     selectedCourse: this.data.courseNames[e.detail.value],
+                     selectedCourseId:this.data.courseIds[e.detail.value]
               });
+              console.log(this.data.selectedCourse)
+              console.log(this.data.selectedCourseId)
        },
        // 处理文本域输入
        handleTextAreaInput: function (e) {
@@ -53,80 +59,64 @@ Page({
                             that.get_stu_class(that.data.stuId);
                      }
               });
-
-
-       },
+        },
        //获得课程信息
-       get_stu_class(stuId) {
-              var that = this; // 保存当前页面的this引用
-              // 请求的接口地址
-              var apiUrl = 'http://127.0.0.1:5000/student_manager/view_student_courses';
-              console.log(stuId)
-              wx.request({
-                     url: apiUrl,
-                     method: 'GET',
-                     header: {
-                            'app': 'wx-app'
-                     },
-                     data: {
-                            'student_id': stuId,
-                            'semester': '2023',
-                            'week_no': 5
-                     },
-                     success: function (res) {
-                            if (res.statusCode === 200) {
-                                   // 接受参数
-                                   var result = res.data;
-                                   //      console.log(result.class_schedule_records)
-                                   that.setData({
-                                          courseData: result.class_schedule_records,
-                                   }, () => {
-                                          that.fetchCourseData();
-                                   });
-                            } else {
-                                   // 捕捉状态报错
-                                   console.error('Error:', res.statusCode, res.data);
-                            }
-                     },
-                     fail: function (error) {
-                            // 捕捉请求报错
-                            console.error('Request failed:', error);
-                     }
-              });
-       },
-       //将课程信息保存起来
-       fetchCourseData: function () {
-              var that = this;
-              var names = that.data.courseData.map(function (course) {
-                     return course.course_name;
-              });
-              // 去除重复的课程名称
-              var uniqueNames = [...new Set(names)];
-              that.setData({
-                     courseNames: uniqueNames,
-                     selectedCourse: uniqueNames[0] || '' // 设置默认值，如果数组为空则为空字符串
-
-              });
-              console.log(that.data.courseNames)
-       },
+  get_stu_class(stuId) {
+    var that = this; // 保存当前页面的this引用
+    // 请求的接口地址
+    var apiUrl = 'http://127.0.0.1:5000/student_manager/search_student_course';
+    console.log(stuId)
+    wx.request({
+      url: apiUrl,
+      method: 'GET',
+      header: {
+        'app': 'wx-app'
+      },
+      data: {
+        'student_id': stuId,
+      },
+      success: function (res) {
+        if (res.statusCode === 200) {
+          // 接受参数
+          var result = res.data;
+         // 提取课程ID和课程名称
+         var studentCourses = result.student_courses;
+         var CourseIds = [];
+         var CourseNames = [];
+         studentCourses.forEach(function(course) {
+           for (let key in course) {
+             CourseIds.push(key);
+             CourseNames.push(course[key]);
+           }
+         });
+         // 将courseId和courseNames数组赋值给页面数据
+          that.setData({
+            courseIds:CourseIds,
+            courseNames:CourseNames,
+          });
+          console.log(that.data.courseIds)
+          console.log(that.data.courseNames)
+        } else {
+          // 捕捉状态报错
+          console.error('Error:', res.statusCode, res.data);
+        }
+      },
+      fail: function (error) {
+        // 捕捉请求报错
+        console.error('Request failed:', error);
+      }
+    });
+  },
 
        // 提交表单时调用的函数
        submitForm: function (e) {
               var apiUrl = 'http://127.0.0.1:5000/student_manager/absence_on_leave';
-
-              const formData = e.detail.value;
-
               // 构造请求数据
               const requestData = {
-                     // student_id: this.data.stuId, // 示例学号
-                     // course_id:'c1', // 用户选择的课程ID
-                     // course_number: 'T001', // 用户选择的周次
-                     // reason: this.data.expOverview, // 用户输入的请假理由
-                     'student_id': '2021611001',
-        'course_id': 'c1',
-        'teacher_id': 'T001',
-        'course_number': '10'
-
+                    'student_id': this.data.stuId,
+                    'course_id': this.data.selectedCourseId,
+                    'week_id': parseInt(this.data.weekIndex)+3,
+                    'reason':this.data.expOverview
               };
 
 

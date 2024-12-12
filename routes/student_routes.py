@@ -107,7 +107,7 @@ def view_student_courses():
             schedule_records = class_schedule_manager.execute_sql_query(sql_query_schedule)
 
             schedule_records_with_name = [
-                {'course_name': course_name, 'day_of_week': record[0],
+                {'course_name': course_name, 'day_of_week': record[0],'course_id':course_id,
                  'start_time': record[1], 'end_time': record[2]} for record in schedule_records]
 
             class_schedule_records.extend(schedule_records_with_name)
@@ -292,7 +292,7 @@ def absence_on_leave():
         # 获取请求参数
         student_id = request.form.get('student_id')
         course_id = request.form.get('course_id')
-        course_number = request.form.get("course_number")
+        course_number = request.form.get("week_id")
         reason = request.form.get("reason")
 
         # 判断课程号是否正确
