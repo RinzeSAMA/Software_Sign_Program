@@ -16,11 +16,11 @@
     </picker>
     <view>
       <icon class='icon iconfont cd-yonghu'></icon>
-      <input type='text' name="userName" placeholder='请输入账号' bindtap="get_account"></input>
+      <input type='text' name="userName" placeholder='请输入学号/工号' bindtap="get_account"></input>
     </view>
     <view>
       <icon class="icon iconfont cd-mima"></icon>
-      <input type='text' name="userPwd" placeholder='请输入姓名' bindtap="get_password"></input>
+      <input type='text' name="userPwd" placeholder='请输入密码' bindtap="get_password"></input>
     </view>
     <button form-type='submit'>登录</button>
   </form>

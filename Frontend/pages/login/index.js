@@ -44,10 +44,10 @@ Page({
        },
        login(e) {
               if (e.detail.value.userName == "") {
-                     m.showTost('请输入学号');
+                     m.showTost('学号/工号为空！请输入');
                      return;
               } else if (e.detail.value.userPwd == "") {
-                     m.showTost('请输入姓名');
+                     m.showTost('密码为空！请输入');
                      return;
               } else {
                      // m.showLoading('正在登录');
