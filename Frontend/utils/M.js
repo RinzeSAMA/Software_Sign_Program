@@ -37,6 +37,7 @@ class M extends Cd {
             // 展示“登录成功！”提示
             wx.showToast({
               title: '登录成功！',
+
               duration: 1500, // 展示1.5秒
               complete: () => {
                 // 1.5秒后执行跳转
@@ -54,6 +55,7 @@ class M extends Cd {
           wx.hideLoading();
           wx.showToast({
             title: '学号或密码错误',
+            icon:'none',
           })
         }
       },
@@ -82,7 +84,7 @@ class M extends Cd {
           setTimeout(() => {
             // 将用户ID存入缓存，使用同步方法wx.setStorageSync
             try {
-              wx.setStorageSync('teaId', teacher_id);
+              wx.setStorageSync('teaId', id);
               console.log('用户ID存储成功');
             } catch (e) {
               console.error('用户ID存储失败', e);
@@ -107,6 +109,7 @@ class M extends Cd {
           wx.hideLoading();
           wx.showToast({
             title: '学号或密码错误',
+            icon:'none',
           })
         }
       },

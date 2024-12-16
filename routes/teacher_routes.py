@@ -239,16 +239,16 @@ def search_teacher_course():
 
     try:
         # 获取参数请求
-        teacher_id = request.args.get('student_id')
+        teacher_id = request.args.get('teacher_id')
 
         # 查询数据库
-        sql_command = f"select distinct course_name from course_selection where teacher_id = '{teacher_id}'"
+        sql_command = f"select distinct course_id,course_name from course_selection where teacher_id = '{teacher_id}'"
         all_courses = course_selection_manager.execute_sql_query(sql_query=sql_command)
 
         # 展开课程名称
         courses_list = [
             {
-                'course_name': course.course_name
+                 course.course_id: course.course_name
             }
             for course in all_courses
         ]

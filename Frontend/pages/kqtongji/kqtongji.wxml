@@ -49,7 +49,7 @@
     <view class="flex-container">
       <text class="table-cell">{{item.name}}
       </text>
-      <block wx:if="{{item.status == 2}}">
+      <block  wx:if="{{item.status == 2}}">
         未审批
       </block>
       <block wx:elif="{{item.status == 3}}">

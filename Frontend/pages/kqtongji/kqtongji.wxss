@@ -95,13 +95,13 @@
     .table-cell {
       flex: 1; /* 允许元素占据可用空间 */
       text-align: left; /* 文本左对齐 */
-      padding: 20rpx; /* 增加单元格内边距 */
+      padding: 10px; /* 增加单元格内边距 */
     }
     
     .status-text {
       flex: 1; /* 允许元素占据可用空间 */
       text-align: right; /* 文本右对齐 */
-      padding: 0 20rpx; /* 增加单元格内边距 */
+      padding: 20px; /* 增加单元格内边距 */
       
     }
     .table-cell, .status-text {
