@@ -42,19 +42,19 @@ def verify_teacher_login():
     try:
         # 获取请求参数
         teach_id = request.args.get('teacher_id')
-        teach_name = request.args.get('teacher_name')
+        teach_password = request.args.get('teacher_password')
 
-        # 查询老师的名字
-        teacher_name_tuple = teacher_manager.execute_sql_query(
-            f"select teacher_name from teacher_information where teacher_id='{teach_id}'")
+        # 查询老师的密码
+        teacher_password_tuple = teacher_manager.execute_sql_query(
+            f"select password from teacher_information where teacher_id='{teach_id}'")
 
         # 从元组中提取老师姓名
-        teacher_name = teacher_name_tuple[0][0]
-        if not teacher_name:
+        teacher_password = teacher_password_tuple[0][0]
+        if not teacher_password:
             return jsonify({'error': 'Teacher not found'}), 404
 
         # 返回老师名字比较的结果
-        flag = teach_name == teacher_name
+        flag = teach_password == teacher_password
         if flag==True:
             return jsonify({'msg': str(flag)}),200
         else:

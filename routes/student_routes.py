@@ -134,22 +134,22 @@ def verify_stu_login():
     try:
         # 获取请求参数
         student_id = request.args.get('student_id')
-        student_name = request.args.get('student_name')
+        student_password = request.args.get('student_password')
 
-        # 查询学生的名字
-        stu_name_tuple = student_manager.execute_sql_query(
-            f"select stu_name from student_information where stu_id='{student_id}'")
-        if not stu_name_tuple:
+        # 查询学生的密码
+        stu_password_tuple = student_manager.execute_sql_query(
+            f"select password from student_information where stu_id='{student_id}'")
+        if not stu_password_tuple:
             return jsonify({'error': 'Student not found'}), 404
 
-        print(stu_name_tuple)
-        # 从元组中提取学生姓名
-        stu_name = stu_name_tuple[0][0]
-        if not stu_name:
+        print(stu_password_tuple)
+        # 从元组中提取学生密码
+        stu_password = stu_password_tuple[0][0]
+        if not stu_password:
             return jsonify({'error': 'Student not found'}), 404
 
         # 返回学生名字比较的结果
-        flag = student_name == stu_name
+        flag = student_password == stu_password
         if flag == True:
             return jsonify({'msg': str(flag)}), 200
         else:
