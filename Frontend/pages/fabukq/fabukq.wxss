@@ -1,20 +1,42 @@
 .container {
-  padding: 50rpx;
+  padding: 50rpx; 
+  margin: 40rpx;
+  margin-top: 200rpx;
+  border: 2rpx solid #3498db;
 }
 
 .form-group {
-  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between; /* 子元素之间的间距平均分布 */
+  align-items: center; /* 垂直居中对齐 */
+  margin-top: 20px;
+  /*border: 2rpx solid #3498db; /* 蓝色边框 */
+  border-radius: 10rpx; /* 圆角边框 */
+  font-size: medium
+  ;
 }
 
 .label-container {
+  flex: 1; /* 让标签容器占据剩余空间 */
   display: flex; /* 使用flex布局 */
   align-items: center; /* 垂直居中对齐 */
   margin-bottom: 10rpx; /* 添加下方空隙 */
+  position: relative;
 }
 
 .label-container text {
   margin-right: 10rpx; /* 添加右侧空隙 */
   flex-shrink: 0; /* 禁止文字收缩，保持靠左对齐 */
+}
+
+.datePicker {
+  flex-grow: 1; /* 让选择器扩展填充可用空间 */
+  border: 2rpx solid #3498db; /* 蓝色边框 */
+  border-radius: 10rpx; /* 圆角边框 */
+  padding: 20rpx;
+  margin-right: 20rpx;
+  background-color: #fff;
+  font-size: 12px;
 }
 
 button {
@@ -26,4 +48,57 @@ button {
   color: #fff;
   font-size: 32rpx;
   margin-top: 20rpx; /* 添加上方间距 */
+}
+
+.content {
+  padding: 20rpx;
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+}
+.content text {
+  font-size: 25rpx; /* 适当放大文本 */
+  color: #333; /* 深色文本 */
+  margin-right: 20rpx;
+}
+.picker {
+  flex-grow: 1; /* 让选择器扩展填充可用空间 */
+  border: 2rpx solid #3498db; /* 蓝色边框 */
+  border-radius: 10rpx; /* 圆角边框 */
+  padding: 20rpx;
+  margin-right: 20rpx;
+  background-color: #fff;
+  font-size: small;
+}
+.context{
+  border-radius: 20px;
+  border-color: black;
+  padding: 10rpx;
+  width: 85%;
+  position: relative;
+  top:5%;left:6%;
+  margin-top: 20px;
+  }
+  .context text{
+  display: block;
+  width: 100%;
+  text-align: center;
+  color:black;
+  font-weight:400 ;
+}
+.inputqiandao {
+  margin-top: 30px;
+  border-color: #cccccc; /* 淡灰色 */
+  border-style: solid; /* 实线 */
+  border-radius: 10px;
+  border-width: 2px; /* 边框厚度 */
+  padding: 3%;
+  font-size: 20px;
+  text-align: center;
+}
+.qiandao{
+ margin-top: 20%;
+  background-color: #4183ff;
+  color: floralwhite;
+  font-size: 35rpx;
+  margin-right: 10rpx;
 }
