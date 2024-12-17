@@ -26,11 +26,11 @@
             </view>
             <view class="text-center" >
                 <text class="text-margin">电子邮箱</text>
-                <input type="text" disabled="true" value="{{email}}" placeholder="此处显示邮箱"/>
+                <input type="text" disabled="{{isDisabled}}" style="{{inputFrame}}" value="{{email}}" bindinput="onInputEmail" placeholder="此处显示邮箱"/>
             </view>
             <view class="text-center" >
                 <text class="text-margin">联系电话</text>
-                <input type="text" disabled="{{isDisabled}}" style="{{inputFrame}}" value="{{phone}}" bindinput="onInput" placeholder="请输入联系电话"/>
+                <input type="text" disabled="{{isDisabled}}" style="{{inputFrame}}" value="{{phone}}" bindinput="onInputPhone" placeholder="请输入联系电话"/>
             </view>
         </view>
     </view>

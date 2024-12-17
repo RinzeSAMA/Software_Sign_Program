@@ -389,11 +389,14 @@ def update_student_info():
         if not existing_student:
             return jsonify({'error': 'Student not found'}), 404
 
-        # 更新学生信息
-        update_sql = (f"UPDATE student_information SET phone = '{phone_number}', email = '{email}'"
-        f"WHERE stu_id = '{student_id}'")
+        # 构建需要更新的数据字典
+        new_data = {
+            'phone': phone_number,
+            'email': email
+        }
 
-        student_manager.execute_sql_query(update_sql)
+        # 更新学生信息
+        student_manager.modify_student(student_id, new_data)
 
         return jsonify({'msg': 'Student information updated successfully'}), 200
 
