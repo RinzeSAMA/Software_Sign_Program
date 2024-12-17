@@ -141,7 +141,7 @@ class TeacherManager:
             print(f"teacher with ID {teacher_id} not found in the database.")
             return None
 
-    def modify_teacher(self, teacher_id, new_data):
+    def modify_teacher(self, teacher_id, phone_number, email):
         '''
         修改某个老师记录的某些属性列
         :param teacher_id:需要修改的老师记录的id号
@@ -152,8 +152,8 @@ class TeacherManager:
         session = Session()
         teacher_to_modify = session.query(Teacher).filter_by(teacher_id=teacher_id).first()
         if teacher_to_modify:
-            for key, value in new_data.items():
-                setattr(teacher_to_modify, key, value)
+            teacher_to_modify.phone_number = phone_number
+            teacher_to_modify.email = email
             session.commit()
             print(f"teacher with ID {teacher_id} modified in the database.")
         else:

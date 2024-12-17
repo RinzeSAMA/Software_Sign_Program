@@ -7,6 +7,8 @@ import os
 
 from flask import jsonify, request, Flask, json
 from flask_cors import CORS
+from sqlalchemy.orm import sessionmaker
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from models.attendence_information_table import AttendanceManager
 from models.course_selection_table import CourseSelectionManager
@@ -163,7 +165,7 @@ def view_signal_teacher():
         # 获取请求参数
         teacher_id = request.args.get('teacher_id')
 
-        # 使用StudentManger查看所有学生的信息
+        # 查看对应老师的信息
         signal_teacher = teacher_manager.search_teacher(teacher_id)
 
         # 获取没有密码的信息
@@ -186,6 +188,30 @@ def view_signal_teacher():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# 修改某个老师的信息
+@teacher_routes.route('/teacher_manager/update_signal_teacher', methods=['POST'])
+def update_signal_teacher():
+    teacher_manager = TeacherManager(table_name='teacher_information')
+
+    # 验证请求头
+    if not validate_request_headers():
+        return jsonify({'error': 'Invalid application identification'}), 400
+
+    try:
+        # 获取请求参数
+        data = request.get_json()
+        teacher_id = data.get('teacher_id')
+        phone_number = data.get('phone_number')
+        email = data.get('email')
+
+        # 更新老师信息
+        teacher_manager.modify_teacher(teacher_id, phone_number, email)
+
+        # 返回成功信息
+        return jsonify({'success': 'Teacher updated successfully'})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 # 老师获取学生请假审批信息
 @teacher_routes.route('/teacher_manager/get_leave_requests', methods=['GET'])
 def get_leave_requests():
