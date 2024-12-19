@@ -37,6 +37,7 @@ font-weight:400 ;
   padding: 40rpx;
   display: flex;
   align-items: center; /* 垂直居中对齐 */
+  margin-top: 100px;
 }
 .content text {
   font-size: 30rpx; /* 适当放大文本 */

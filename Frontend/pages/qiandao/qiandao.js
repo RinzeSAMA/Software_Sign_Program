@@ -148,7 +148,7 @@ Page({
             break;
           case 201:
             wx.showToast({
-              title: '添加缺勤记录',
+              title: '你已错过签到时间',
               icon: 'none',
               duration: 2000
             });
@@ -169,7 +169,7 @@ Page({
             break;
           case 404:
             wx.showToast({
-              title: '签到码错误',
+              title: '签到码错误,或考勤不存在',
               icon: 'none',
               duration: 2000
             });

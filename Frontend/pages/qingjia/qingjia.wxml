@@ -15,21 +15,6 @@
                                    <text class="formLabel">请假周次：</text>
                                    <input class="formchoose" type='text' value='{{week[weekIndex]}}' placeholder='请选择周次' disabled='true'></input>
                      </picker>
-                     <view class="form-group">
-                            <text class="formLabel">联系方式：</text>
-                            <input type="text" name="contactInfo" class="formInput" placeholder="请输入联系方式" value="{{contactInfo}}" />
-                     </view>
-                     <view class="form-group">
-                            <text class="formLabel" style="width: 280rpx;">是否请病假</text>
-                            <radio-group name="STeam" class="formSelect">
-                                   <label class="selectItem">
-                                          <radio value="是" />是
-                                   </label>
-                                   <label class="selectItem">
-                                          <radio value="否" />否
-                                   </label>
-                            </radio-group>
-                     </view>
                      <view class="">
                             <text class="textareaTitle">请假理由：</text>
                             <textarea name="expOverview" value="{{expOverview}}" maxlength="1000" bindinput="handleTextAreaInput" />

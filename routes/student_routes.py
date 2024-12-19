@@ -217,9 +217,10 @@ def punch_in():
         course_id = request.form.get('course_id')
 
 
-        # 根据签到码来查找相关的post_attendance记录
+        # 根据签到码和课程id来查找相关的post_attendance记录,返回最新的一条，因为这条即正在进行中的考勤，即使依据code和course_id决定的可能有多条记录
         post_attendance_list = post_attendance_manager.execute_sql_query(f"select * from post_attendance_information"
-                                                                         f" where code='{code}' and course_id='{course_id}' ")
+                                                                         f" where code='{code}' and course_id='{course_id}' "
+                                                                         f"ORDER BY attendance_end_time DESC LIMIT 1" )
 
         # 判断该考勤任务是否存在
         if len(post_attendance_list) == 0:
@@ -228,6 +229,7 @@ def punch_in():
         # 获取 post_attendance_information 内的考勤时间 %Y-%m-%d %H:%M:%S
         start_time = post_attendance_list[0][4]
         end_time = post_attendance_list[0][5]
+        weekid = post_attendance_list[0][3]#当前考勤的周次
 
         # 获取存入 attendance_information 表的时间  %H:%M:%S
         start_time_str = datetime.strftime(start_time, "%Y-%m-%d %H:%M:%S")
@@ -247,7 +249,7 @@ def punch_in():
 
         # 查找对应的考勤记录
         attendance_record = attendance_information_manager.execute_sql_query(
-            f"select * from attendance_information where stu_id='{student_id}' and course_id='{course_id}'"
+            f"select * from attendance_information where stu_id='{student_id}' and course_id='{course_id}' and course_no = '{weekid}'"
         )
 
         # 判断是否有对应的考勤记录
@@ -269,7 +271,7 @@ def punch_in():
         else:
             # 如果有记录，更新考勤状态为1
             attendance_information_manager.execute_sql_query(
-                f"update attendance_information set status=1,signin_time = '{current_time}' where stu_id='{student_id}' and course_id='{course_id}'"
+                f"update attendance_information set status=1,signin_time = '{current_time}' where stu_id='{student_id}' and course_id='{course_id}'and course_no = '{weekid}'"
             )
             return jsonify({'msg': 'The attendance status has been updated successfully'}), 200
 
