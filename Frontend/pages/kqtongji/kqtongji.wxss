@@ -78,10 +78,11 @@
      }
      
      .table-row {
+      border: 1px solid #000; /* 添加黑色边框 */
       justify-content: space-between; /* 元素之间的间距平均分布 */
-      border-top: 2rpx solid #eee; /* 行与行之间的分隔线 */
       padding:  0 40rpx; /* 行内上下padding */
       align-items: center;
+      margin: 10rpx;
     }
     
     .flex-container {
@@ -138,6 +139,5 @@
       font-family: 'Arial', sans-serif; /* 设置字体 */
       color: #333; /* 文本颜色 */
       margin: 10px 0; /* 外边距，上下间距 */
-      width: 100%; /* 宽度 */
       box-sizing: border-box; /* 盒模型 */
     }

@@ -3,8 +3,15 @@
   white-space: nowrap;
   height: 75rpx;
   font-size: 25rpx;
+  background-color: #f7f7f7; /* 导航背景颜色 */
+  border-bottom: 1px solid #e0e0e0; /* 导航底部边框 */
+  padding: 0 20rpx; /* 左右内边距 */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* 阴影效果 */
 }
 .tabbar{
+  position: fixed; /* 固定定位 */
+  bottom: 0; /* 位于页面底部 */
+  width: 100%; /* 宽度占满整个屏幕 */
        z-index: 1000;
 }
 /* .courseContainer{
@@ -16,11 +23,13 @@
 .navScroll .navItem .navContent {
   padding: 5rpx 25rpx;
   line-height: 38rpx;
+  transition: color 0.3s, border-color 0.3s; /* 过渡效果 */
 }
 
 .active{
   border-bottom: 1px solid red;
   color: red;
+  font-weight: bold; /* 加粗字体 */
 }
 
 .date{
@@ -29,6 +38,8 @@
   padding: 6rpx 0;
   color: #3f3f3f;
   line-height: 1.4;
+  background-color: #e0f7fa; /* 浅蓝色背景 */
+  align-items: center; /* 垂直居中 */
 }
 
 .date .month{
@@ -74,9 +85,11 @@
 .courseScroll{
   width: 100%;
   height: calc(100% - 119px); /* 减去底部导航栏的高度 */
-  position: fixed;
-  top: 69px;
-  z-index: 2;
+  position: relative;
+  top: 10px;
+  z-index: 100;
+  overflow-y: auto; /* 垂直方向添加滚动条 */
+  max-height: calc(100vh - 150px); /* 假设底部导航栏高度为50px */
 }
 
 .courseScroll .courseContent{
@@ -133,6 +146,7 @@
 .courseScroll .courseContent .courseTime .left .number{
   font-size: 24rpx;
   line-height: 110rpx;
+  color: #757575; /* 灰色字体 */
 }
 
 .course{
@@ -159,6 +173,8 @@
   padding: 2rpx 4rpx;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 添加阴影效果 */
+  transition: background-color 0.3s, transform 0.3s; /* 过渡效果 */
 }
 
 .course .kcb-item .smalltext .smalltextName{

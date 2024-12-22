@@ -4,7 +4,7 @@
   <!-- 表头 -->
   <view class="leave-applications-header">
     <text class="header-student-name">学生姓名</text>
-    <text class="header-course-id">课程编号</text>
+    <text class="header-course-id">课程名</text>
     <text class="header-course-week">周次</text>
   </view>
   <!-- 申请列表 -->
@@ -14,7 +14,7 @@
       <view class="leave-applications-header">
         <text class="header-student-name">{{ item.student_name }}</text>
         <!--学生号-->
-        <text class="header-course-id">{{ item.course_id }}</text>
+        <text class="header-course-id">{{ item.course_name }}</text>
         <!--课程号-->
         <text class="header-course-week">{{ item.course_no }}</text>
         <!--周次-->

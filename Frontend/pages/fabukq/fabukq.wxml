@@ -6,18 +6,20 @@
 
       <text>请选择课程：</text>
       <picker bindchange="inputCourseName" value="{{courseName}}" range="{{courseNames}}">
-        <view class="picker">
-          {{courseName}}
+        <view class="Picker">
+          <view style="color: #cccccc;">{{courseName ? courseName:'请选择课程'}}</view>
         </view>
       </picker>
-      <text>请选择周次：</text>
-      <picker bindchange="inputCourseWeek" value="{{courseWeek}}" range="{{WeekIds}}">
-        <view class="picker">
-          {{courseWeek}}
-        </view>
-      </picker>
+     
   </view>
- 
+   <view class="form-group">
+    <text>请选择周次：</text>
+      <picker bindchange="inputCourseWeek" value="{{courseWeek}}" range="{{WeekIds}}">
+        <view class="Picker">
+          <view style="color: #cccccc;">{{courseWeek ? courseWeek:'请选择周次'}}</view>
+        </view>
+      </picker>
+   </view>
 
 
   <view class="form-group">

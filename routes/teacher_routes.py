@@ -213,6 +213,7 @@ def update_signal_teacher():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 # 老师获取学生请假审批信息
 @teacher_routes.route('/teacher_manager/get_leave_requests', methods=['GET'])
 def get_leave_requests():
@@ -229,9 +230,14 @@ def get_leave_requests():
         teacher_id = request.args.get('teacher_id')
 
         # 查询状态为2且与老师工号对应的记录
-        sql_query_leave_requests = f"SELECT stu_id, course_id, course_no, date,reason FROM attendance_information WHERE status = 2 AND teacher_id = '{teacher_id}'"
+        sql_query_leave_requests = (f"SELECT attendance_information.stu_id, attendance_information.course_id, course_no, date,reason,course_name"
+                                    f" FROM attendance_information,course"
+                                    f" WHERE status = 2 AND attendance_information.teacher_id = '{teacher_id}'"
+                                    f"AND attendance_information.course_id = course.course_id"
+                                    )
         leave_requests = attendance_manager.execute_sql_query(sql_query_leave_requests)
 
+        #根据course_id查询对应的
         # 存储学生请假信息
         leave_requests_info = []
 
@@ -243,6 +249,7 @@ def get_leave_requests():
                 "course_no": leave_request_item[2],
                 "date": leave_request_item[3],
                 "reason": leave_request_item[4],
+                "course_name": leave_request_item[5]
             }
 
             student_information = student_manager.search_student(leave_request_detail['student_id'])

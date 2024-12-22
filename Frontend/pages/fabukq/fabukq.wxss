@@ -1,8 +1,9 @@
 .container {
   padding: 50rpx; 
-  margin: 40rpx;
+  margin: 20rpx;
   margin-top: 200rpx;
-  border: 2rpx solid #3498db;
+  border: 2px solid #3498db;
+  border-radius: 10rpx; /* 圆角边框 */
 }
 
 .form-group {
@@ -12,8 +13,9 @@
   margin-top: 20px;
   /*border: 2rpx solid #3498db; /* 蓝色边框 */
   border-radius: 10rpx; /* 圆角边框 */
-  font-size: medium
-  ;
+  font-size: 25rpx;
+  padding: 5rpx; /* 内边距 */
+  width: 100%;
 }
 
 .label-container {
@@ -37,6 +39,8 @@
   margin-right: 20rpx;
   background-color: #fff;
   font-size: 12px;
+  font-size: 14px;
+  max-width: 100%; /* 限制最大宽度 */
 }
 
 button {
@@ -47,7 +51,11 @@ button {
   background-color: #007aff;
   color: #fff;
   font-size: 32rpx;
-  margin-top: 20rpx; /* 添加上方间距 */
+  margin-top: 20rpx;
+  border-radius: 10rpx; /* 圆角边框 */
+  border: none; /* 无边框 */
+  cursor: pointer; /* 鼠标悬停时显示指针 */
+  transition: background-color 0.3s; /* 背景色渐变效果 */
 }
 
 .content {
@@ -60,14 +68,17 @@ button {
   color: #333; /* 深色文本 */
   margin-right: 20rpx;
 }
-.picker {
+.Picker {
   flex-grow: 1; /* 让选择器扩展填充可用空间 */
   border: 2rpx solid #3498db; /* 蓝色边框 */
   border-radius: 10rpx; /* 圆角边框 */
   padding: 20rpx;
   margin-right: 20rpx;
   background-color: #fff;
-  font-size: small;
+  font-size: 12px;
+  font-size: 14px;
+  max-width: 100%; /* 限制最大宽度 */
+  
 }
 .context{
   border-radius: 20px;
@@ -90,10 +101,11 @@ button {
   border-color: #cccccc; /* 淡灰色 */
   border-style: solid; /* 实线 */
   border-radius: 10px;
-  border-width: 2px; /* 边框厚度 */
+  border-width: 2rpx; /* 边框厚度 */
   padding: 3%;
   font-size: 20px;
   text-align: center;
+  width: 100%; /* 确保输入框宽度 */
 }
 .qiandao{
  margin-top: 20%;
