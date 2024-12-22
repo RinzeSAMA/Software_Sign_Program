@@ -92,7 +92,7 @@ def view_absentee_list():
         # 检查每个学生在指定周次的出勤情况
         for student_id_tuple in student_ids:
             student_id = student_id_tuple[0]
-            sql_query_absence = f"SELECT * FROM attendance_information WHERE stu_id = '{student_id}' AND course_id = '{course_id}' AND course_no = {course_no} AND status IN (0, 2, 3)"
+            sql_query_absence = f"SELECT * FROM attendance_information WHERE stu_id = '{student_id}' AND course_id = '{course_id}' AND course_no = {course_no} AND status IN (0, 2, 3,4)"
             absence_info = attendance_manager.execute_sql_query(sql_query_absence)
 
             # 如果学生在该周次有缺勤记录，则添加到列表中
@@ -100,7 +100,8 @@ def view_absentee_list():
                 for info in absence_info:
                     absent_students.append({
                         'name':student_id_tuple[1],#加入名字
-                        'status':info[5]#加入status
+                        'status':info[5],#加入status
+                        'reason':info[8]
                     })
 
         # 返回缺勤学生名单
@@ -228,7 +229,7 @@ def get_leave_requests():
         teacher_id = request.args.get('teacher_id')
 
         # 查询状态为2且与老师工号对应的记录
-        sql_query_leave_requests = f"SELECT stu_id, course_id, course_no, date FROM attendance_information WHERE status = 2 AND teacher_id = '{teacher_id}'"
+        sql_query_leave_requests = f"SELECT stu_id, course_id, course_no, date,reason FROM attendance_information WHERE status = 2 AND teacher_id = '{teacher_id}'"
         leave_requests = attendance_manager.execute_sql_query(sql_query_leave_requests)
 
         # 存储学生请假信息
@@ -241,6 +242,7 @@ def get_leave_requests():
                 "course_id": leave_request_item[1],
                 "course_no": leave_request_item[2],
                 "date": leave_request_item[3],
+                "reason": leave_request_item[4],
             }
 
             student_information = student_manager.search_student(leave_request_detail['student_id'])
@@ -302,9 +304,8 @@ def review_leave_request():
         course_no = request.form.get('course_no')
         is_reviewed = request.form.get('is_reviewed')
 
-        # 初始化审核状态，若通过审核则为3，否则为0
-        status = 3 if is_reviewed == 'true' else 0
-
+        # 初始化审核状态，若通过审核则为3，否则为4
+        status = 3 if is_reviewed == 'true' else 4
         # 更新的sql语句
         update_sql_statement = (
             f"UPDATE attendance_information SET status = {status} "

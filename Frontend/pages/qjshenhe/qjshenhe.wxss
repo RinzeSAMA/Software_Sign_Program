@@ -1,5 +1,6 @@
 .container {
   padding: 20rpx;
+  margin-top: 50px;
 }
 
 .leave-applications-header {
@@ -53,4 +54,28 @@
   color: #fff;
   font-size: 35rpx;
   margin-left: 10rpx;
+}
+.reason {
+  border: 1px solid #000; /* 添加黑色边框 */
+  padding: 10px; /* 内边距，使内容与边框之间有空间 */
+  background-color: #f9f9f9; /* 浅灰色背景 */
+  border-radius: 8px; /* 圆角边框 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 添加阴影效果 */
+  font-family: 'Arial', sans-serif; /* 设置字体 */
+  color: #333; /* 文本颜色 */
+  margin: 10px 0; /* 外边距，上下间距 */
+  width: 100%; /* 宽度 */
+  box-sizing: border-box; /* 盒模型 */
+}
+.unit{
+  border: 1px solid rgb(113, 138, 221); /* 添加黑色边框 */
+  padding: 10px; /* 内边距，使内容与边框之间有空间 */
+  background-color: #f9f9f9; /* 浅灰色背景 */
+  border-radius: 8px; /* 圆角边框 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 添加阴影效果 */
+  font-family: 'Arial', sans-serif; /* 设置字体 */
+  color: #333; /* 文本颜色 */
+  margin: 10px 0; /* 外边距，上下间距 */
+  width: 100%; /* 宽度 */
+  box-sizing: border-box; /* 盒模型 */
 }
