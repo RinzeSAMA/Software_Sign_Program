@@ -135,7 +135,7 @@ Page({
             if (student.status === 0) {
               // 如果status为0，存入absenceList
               absenceList.push(student);
-            } else if (student.status === 2 || student.status === 3) {
+            } else if (student.status === 2 || student.status === 3 || student.status === 4) {
               // 如果status为2或3，存入qingjiaList
               qingjiaList.push(student);
             }

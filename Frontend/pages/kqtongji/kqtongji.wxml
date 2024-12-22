@@ -45,17 +45,24 @@
   
   <!-- 请假学生列表 -->
   <block wx:if="{{radioValue=='2'}}">
-  <view class="table-row" wx:for="{{qingjiaList}}" wx:key="unique">
-    <view class="flex-container">
-      <text class="table-cell">{{item.name}}
-      </text>
-      <block  wx:if="{{item.status == 2}}">
-        未审批
-      </block>
-      <block wx:elif="{{item.status == 3}}">
-        已审批
-      </block>
+    <view class="table-row" wx:for="{{qingjiaList}}" wx:key="unique">
+      <view class="flex-container">
+        <text class="table-cell">{{item.name}}
+        </text>
+        <block wx:if="{{item.status == 2}}">
+          未审批
+        </block>
+        <block wx:elif="{{item.status == 3}}">
+          已通过
+        </block>
+        <block wx:elif="{{item.status == 4}}">
+          已拒绝
+        </block>
+      </view>
+      <!-- 请假理由 -->
+      <view class="reason">
+            请假理由：{{ item.reason }}
+          </view>
     </view>
+  </block>
   </view>
-</block>
-</view>

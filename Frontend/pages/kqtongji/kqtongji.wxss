@@ -78,10 +78,9 @@
      }
      
      .table-row {
-      display: flex;
       justify-content: space-between; /* 元素之间的间距平均分布 */
       border-top: 2rpx solid #eee; /* 行与行之间的分隔线 */
-      padding: 10rpx 0; /* 行内上下padding */
+      padding:  0 40rpx; /* 行内上下padding */
       align-items: center;
     }
     
@@ -90,6 +89,7 @@
       display: flex;
       justify-content: space-between; /* 元素之间的间距平均分布 */
       align-items: center;
+      padding: 15rpx;
     }
     
     .table-cell {
@@ -129,3 +129,15 @@
        background-color: #3498db; /* 蓝色背景 */
        color: #fff;
      }
+     .reason {
+      border: 1px solid #000; /* 添加黑色边框 */
+      padding: 10px; /* 内边距，使内容与边框之间有空间 */
+      background-color: #f9f9f9; /* 浅灰色背景 */
+      border-radius: 8px; /* 圆角边框 */
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 添加阴影效果 */
+      font-family: 'Arial', sans-serif; /* 设置字体 */
+      color: #333; /* 文本颜色 */
+      margin: 10px 0; /* 外边距，上下间距 */
+      width: 100%; /* 宽度 */
+      box-sizing: border-box; /* 盒模型 */
+    }
