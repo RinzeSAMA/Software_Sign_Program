@@ -9,9 +9,11 @@ Page({
     WeekIds: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"],
     selectedWeek: '请选择周次',
     selectedCourse: '请选择课程',
+    List: [], //出勤学生列表
     qingjiaList: [], // 请假学生列表
     absenceList: [], // 缺勤学生列表
     course_id: '',
+    rate: '', //出勤率
   },
 
   onLoad: function () {
@@ -129,7 +131,7 @@ Page({
           // 请求成功，更新缺勤名单数据
           let qingjiaList = []; // 请假列表
           let absenceList = []; // 缺勤列表
-
+          let List = []; //出勤列表
           // 遍历缺勤学生名单，根据status分类
           res.data.absent_students.forEach(student => {
             if (student.status === 0) {
@@ -138,12 +140,22 @@ Page({
             } else if (student.status === 2 || student.status === 3 || student.status === 4) {
               // 如果status为2或3，存入qingjiaList
               qingjiaList.push(student);
+            } else if (student.status === 1) {
+              List.push(student)
             }
           });
           // 更新页面数据
           that.setData({
             qingjiaList: qingjiaList,
-            absenceList: absenceList
+            absenceList: absenceList,
+            List: List,
+          });
+          let totalStudents = res.data.absent_students.length; // 总学生数
+          let rate = (List.length / totalStudents) * 100; // 缺勤率转换为百分比
+          let formattedRate = rate.toFixed(1); // 格式化为一位小数的字符串
+          // 更新缺勤率
+          that.setData({
+              rate: formattedRate + '%' // 将百分数符号添加到字符串末尾
           });
         } else {
           // 处理非200的响应状态码

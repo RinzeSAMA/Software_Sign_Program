@@ -116,14 +116,18 @@
      .radio-label {
        display: flex;
        justify-content: space-around;
+       align-items: center; /* 确保子元素垂直居中 */
+       font-size: 12px;
      }
      
      .radio {
+       display: flex;
        padding: 20rpx;
        border: 2rpx solid #3498db; /* 蓝色边框 */
        border-radius: 10rpx;
        background-color: #fff;
        color: #333;
+       position: relative;
      }
      
      .radio:checked {

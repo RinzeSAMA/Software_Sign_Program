@@ -92,7 +92,7 @@ def view_absentee_list():
         # 检查每个学生在指定周次的出勤情况
         for student_id_tuple in student_ids:
             student_id = student_id_tuple[0]
-            sql_query_absence = f"SELECT * FROM attendance_information WHERE stu_id = '{student_id}' AND course_id = '{course_id}' AND course_no = {course_no} AND status IN (0, 2, 3,4)"
+            sql_query_absence = f"SELECT * FROM attendance_information WHERE stu_id = '{student_id}' AND course_id = '{course_id}' AND course_no = {course_no}"
             absence_info = attendance_manager.execute_sql_query(sql_query_absence)
 
             # 如果学生在该周次有缺勤记录，则添加到列表中
